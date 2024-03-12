@@ -36,6 +36,14 @@ if [[ `(lsb_release -sd || grep ^PRETTY_NAME /etc/os-release) 2>/dev/null | grep
   osinfo="Parrot"
 fi
 
+if [[ `(lsb_release -sd || grep ^PRETTY_NAME /etc/os-release) 2>/dev/null | grep "Pop"` ]]; then
+  osinfo="Pop"
+fi
+
+if [[ `(lsb_release -sd || grep ^PRETTY_NAME /etc/os-release) 2>/dev/null | grep "Ubuntu"` ]]; then
+  osinfo="Ubuntu"
+fi
+
 if [ -f /etc/issue ];
 then
   if [[ `cat /etc/issue | cut -d" " -f3 | head -n1 | grep "Alpine"` ]]; then
@@ -209,7 +217,7 @@ case ${osinfo} in
     cd ..
   ;;
   # Ubuntu (tested in 13.10) Dependency Installation
-  Ubuntu)
+  Ubuntu | Pop)
     apt-get update
     echo '[*] Installing Ubuntu Dependencies'
     apt-get install -y cmake python3 xvfb python3-pip python3-netaddr python3-dev firefox x11-utils
