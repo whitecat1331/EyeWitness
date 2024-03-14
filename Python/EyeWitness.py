@@ -398,7 +398,7 @@ def multi_callback(x):
         print('\x1b[32m[*] Completed {0} out of {1} hosts\x1b[0m'.format(multi_counter, multi_total))
 
 
-if __name__ == "__main__":
+def main():
     title_screen()
     cli_parsed = create_cli_parser()
     start_time = time.time()
@@ -459,3 +459,6 @@ if __name__ == "__main__":
                 sys.exit()
         class_info()
         sys.exit()
+
+if __name__ == "__main__":
+    main()
