@@ -41,7 +41,60 @@ multi_counter = 0
 multi_total = 0
 
 
-def create_cli_parser():
+class Options:
+    def __init__(self, help=False, web=True, f=None, x=None, 
+                  single=None, no_dns=False, timeout=7, 
+                  jitter=0, delay=0, threads=10,
+                  max_retries=1, d=None, results=25,
+                  no_prompt=False, user_agent=None, 
+                  difference=50, proxy_ip=None,
+                  proxy_port=None, proxy_type="http",
+                  show_selenium=False, resolve=False,
+                  add_http_ports=[], add_https_ports=[], only_ports=[],
+                  prepend_https=False, selenium_log_path=False,
+                 cookies=None, resume=None):
+        self.h = help
+        self.web = web
+        self.f = f
+        self.x = x
+        self.single = single
+        self.no_dns = no_dns
+        self.timeout = timeout
+        self.jitter = jitter
+        self.delay = delay
+        self.threads = threads
+        self.max_retries = max_retries
+        self.d = d
+        self.results = results
+        self.no_prompt = no_prompt
+        self.user_agent = user_agent
+        self.difference = difference
+        self.proxy_ip = proxy_ip
+        self.proxy_port = proxy_port
+        self.proxy_type = proxy_type
+        self.show_selenium = show_selenium
+        self.resolve = resolve
+        self.add_http_ports = add_http_ports
+        self.add_https_ports = add_https_ports
+        self.only_ports = only_ports
+        self.prepend_https = prepend_https
+        self.selenium_log_path = selenium_log_path
+        self.cookies = cookies
+        self.resume = resume
+
+
+
+def create_cli_parser(help=False, web=True, f=None, x=None, 
+                      single=None, no_dns=False, timeout=7, 
+                      jitter=0, delay=0, threads=10,
+                      max_retries=1, d=None, results=25,
+                      no_prompt=False, user_agent=None, 
+                      difference=50, proxy_ip=None,
+                      proxy_port=None, proxy_type="http",
+                      show_selenium=False, resolve=False,
+                      add_http_ports=[], add_https_ports=[], only_ports=[],
+                      prepend_https=False, selenium_log_path=False,
+                      cookies=None, resume=None):
     parser = argparse.ArgumentParser(
         add_help=False, description="EyeWitness is a tool used to capture\
         screenshots from a list of URLs")
@@ -133,7 +186,36 @@ def create_cli_parser():
     resume_options.add_argument('--resume', metavar='ew.db',
                                 default=None, help='Path to db file if you want to resume')
 
-    args = parser.parse_args()
+    """
+    help=False, web=True, f=None, x=None, 
+                      single=None, no_dns=False, timeout=7, 
+                      jitter=0, delay=0, threads=10,
+                      max_retries=1, d=None, results=25,
+                      no_prompt=False, user_agent=None, 
+                      difference=50, proxy_ip=None,
+                      proxy_port=None, proxy_type="http",
+                      show_selenium=False, resolve=False,
+                      add_http_ports=[], add_https_ports=[], only_ports=[],
+                      prepend_https=False, selenium_log_path=False,
+                      cookies=None, resume=None
+    """
+
+    args = Options(help=help, web=web, f=f, x=x,
+                   single=single, no_dns=no_dns,
+                   timeout=timeout, jitter=jitter,
+                   delay=delay, threads=threads,
+                   max_retries=max_retries, d=d,
+                   results=results, no_prompt=no_prompt,
+                   user_agent=user_agent, difference=difference,
+                   proxy_ip=proxy_ip, proxy_port=proxy_port,
+                   proxy_type=proxy_type, show_selenium=show_selenium,
+                   resolve=resolve, add_http_ports=add_http_ports,
+                   add_https_ports=add_https_ports, only_ports=only_ports,
+                   prepend_https=prepend_https, selenium_log_path=selenium_log_path,
+                   cookies=cookies, resume=resume)
+
+
+
     args.date = time.strftime('%Y/%m/%d')
     args.time = time.strftime('%H:%M:%S')
 
@@ -398,9 +480,31 @@ def multi_callback(x):
         print('\x1b[32m[*] Completed {0} out of {1} hosts\x1b[0m'.format(multi_counter, multi_total))
 
 
-def main():
+def main(help=False, web=True, f=None, x=None, 
+                  single=None, no_dns=False, timeout=7, 
+                  jitter=0, delay=0, threads=10,
+                  max_retries=1, d=None, results=25,
+                  no_prompt=False, user_agent=None, 
+                  difference=50, proxy_ip=None,
+                  proxy_port=None, proxy_type="http",
+                  show_selenium=False, resolve=False,
+                  add_http_ports=[], add_https_ports=[], only_ports=[],
+                  prepend_https=False, selenium_log_path=False,
+                 cookies=None, resume=None):
     title_screen()
-    cli_parsed = create_cli_parser()
+    cli_parsed = create_cli_parser(help=help, web=web, f=f, x=x,
+                   single=single, no_dns=no_dns,
+                   timeout=timeout, jitter=jitter,
+                   delay=delay, threads=threads,
+                   max_retries=max_retries, d=d,
+                   results=results, no_prompt=no_prompt,
+                   user_agent=user_agent, difference=difference,
+                   proxy_ip=proxy_ip, proxy_port=proxy_port,
+                   proxy_type=proxy_type, show_selenium=show_selenium,
+                   resolve=resolve, add_http_ports=add_http_ports,
+                   add_https_ports=add_https_ports, only_ports=only_ports,
+                   prepend_https=prepend_https, selenium_log_path=selenium_log_path,
+                   cookies=cookies, resume=resume)
     start_time = time.time()
 
     if cli_parsed.resume:
